@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           <div>
             <div className="mb-4">
                <div className="bg-white p-2 rounded-lg inline-block">
-                 <img src="/suha_logo.png" alt="Suha E&S" className="h-8 w-auto" />
+                 <img src="/suha_logo.PNG" alt="Suha E&S" className="h-8 w-auto" />
                </div>
             </div>
             <p className="text-sm leading-relaxed mb-6 text-slate-400">
