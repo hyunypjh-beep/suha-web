@@ -39,12 +39,18 @@ const Navbar: React.FC = () => {
       } ${!isScrolled && location.pathname !== '/' ? 'bg-slate-900 shadow-md' : ''}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className={`p-2 rounded-lg transition-colors duration-300 ${isNavDark ? 'bg-white' : ''}`}>
-            <img src="/suha_logo.png" alt="Suha E&S" className="h-8 md:h-10 w-auto" />
-          </div>
-        </Link>
+       {/* Logo */}
+<Link to="/" className="flex items-center gap-2 group">
+  {/* 기존 bg-white를 제거하고 배경을 투명하게 유지합니다 */}
+  <div className="p-2 rounded-lg transition-colors duration-300">
+    <img 
+      /* 스크롤 전(isNavDark)에는 흰색 로고, 스크롤 후에는 기본 로고 사용 */
+      src={isNavDark ? "/logo_white.png" : "/suha_logo.png"} 
+      alt="Suha E&S" 
+      className="h-8 md:h-10 w-auto transition-opacity duration-300" 
+    />
+  </div>
+</Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
