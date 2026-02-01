@@ -23,34 +23,38 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
-  // Navbar is dark (transparent on hero or slate-900 on subpages) when not scrolled
-  const isNavDark = !isScrolled;
-  const textColor = isNavDark ? 'text-white' : 'text-slate-900';
-  
+  // 핵심 변경 로직: 메인 페이지 여부 확인
+  const isHomePage = location.pathname === '/';
+
+  // 로고 선택 로직
+  // 1. 메인 페이지이면서 스크롤 안 됐을 때만 '흰색 로고'
+  // 2. 그 외 모든 상황(서브 페이지, 메인 스크롤 후)은 '컬러 로고'
+  const useWhiteLogo = isHomePage && !isScrolled;
+
+  // 글자색 로직 (메인 스크롤 전만 흰색, 나머지는 짙은색)
+  const textColor = useWhiteLogo ? 'text-white' : 'text-slate-900';
+
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'
-      } ${!isScrolled && location.pathname !== '/' ? 'bg-slate-900 shadow-md' : ''}`}
+        isScrolled || !isHomePage ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'
+      }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-       {/* Logo */}
-<Link to="/" className="flex items-center gap-2 group">
-  {/* 기존 bg-white를 제거하고 배경을 투명하게 유지합니다 */}
-  <div className="p-2 rounded-lg transition-colors duration-300">
-    <img 
-      /* 스크롤 전(isNavDark)에는 흰색 로고, 스크롤 후에는 기본 로고 사용 */
-      src={isNavDark ? "/logo_white.png" : "/suha_logo.png"} 
-      alt="Suha E&S" 
-      className="h-8 md:h-10 w-auto transition-opacity duration-300" 
-    />
-  </div>
-</Link>
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 group">
+          <div className="p-2 rounded-lg transition-colors duration-300">
+            <img 
+              src={useWhiteLogo ? "/logo_white.png" : "/suha_logo.png"} 
+              alt="Suha E&S" 
+              className="h-8 md:h-10 w-auto transition-opacity duration-300" 
+            />
+          </div>
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
@@ -68,7 +72,7 @@ const Navbar: React.FC = () => {
           <Link
             to="/contact"
             className={`px-5 py-2 rounded-full font-bold text-sm transition-all ${
-              isNavDark
+              useWhiteLogo
                 ? 'bg-white text-blue-900 hover:bg-slate-100'
                 : 'bg-blue-900 text-white hover:bg-blue-800'
             }`}
@@ -83,9 +87,9 @@ const Navbar: React.FC = () => {
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? (
-            <X className={`w-8 h-8 ${textColor}`} />
+            <X className={`w-8 h-8 ${useWhiteLogo ? 'text-white' : 'text-slate-900'}`} />
           ) : (
-            <Menu className={`w-8 h-8 ${textColor}`} />
+            <Menu className={`w-8 h-8 ${useWhiteLogo ? 'text-white' : 'text-slate-900'}`} />
           )}
         </button>
       </div>
