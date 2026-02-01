@@ -42,7 +42,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="text-lg font-bold text-slate-900 mb-1">전화번호</h4>
                     <p className="text-slate-600">041-540-7883</p>
-                    <p className="text-slate-400 text-sm mt-1">평일 09:00 - 18:00</p>
+                    <p className="text-slate-400 text-sm mt-1">평일 08:00 - 17:00</p>
                   </div>
                 </div>
 
@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-900 mb-1">이메일</h4>
-                    <p className="text-slate-600">admin@suhaens.com</p>
+                    <p className="text-slate-600">official@suha-ens.com</p>
                   </div>
                 </div>
               </div>
