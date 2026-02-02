@@ -3,12 +3,14 @@ import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 기본 전송 방식 차단 (더 정확한 제어를 위해)
+    e.preventDefault();
     const form = e.currentTarget;
+    
+    // 데이터를 전송 가능한 형태로 준비합니다.
     const formData = new FormData(form);
 
     try {
-      // 새로운 주소 mxb76kt5go6 로 직접 전송을 시도합니다.
+      // 1. 서버에 전송 시도
       const response = await fetch("https://getform.io/f/mxb76kt5go6", {
         method: "POST",
         body: formData,
@@ -17,17 +19,18 @@ const Contact: React.FC = () => {
         }
       });
 
+      // 2. 서버 응답 결과 확인
       if (response.ok) {
-        // ✅ 서버가 데이터를 정상적으로 받았을 때만 팝업과 초기화를 실행합니다.
+        // 성공 시: 팝업 띄우고 폼 초기화
         alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
-        form.reset(); 
+        form.reset();
       } else {
-        // ❌ 서버 연결은 됐으나 서버가 거절한 경우 (주소 오류 등)
-        alert("죄송합니다. 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        // 실패 시 (서버 거절): 에러 메시지 띄움
+        alert("죄송합니다. 서버에서 전송을 거절했습니다. 잠시 후 다시 시도하거나 이메일로 직접 문의 부탁드립니다.");
       }
     } catch (error) {
-      // 🌐 네트워크 연결 자체가 안 되는 경우
-      alert("네트워크 연결이 불안정합니다. 인터넷 연결을 확인해주세요.");
+      // 네트워크 오류 시
+      alert("네트워크 연결이 불안정합니다. 인터넷 연결 확인 후 다시 시도해주세요.");
     }
   };
 
@@ -44,7 +47,7 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
-            {/* 왼쪽 정보 섹션 */}
+            {/* 왼쪽: 회사 정보 섹션 */}
             <div>
               <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Us</h2>
               <div className="space-y-8">
@@ -78,7 +81,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* 오른쪽 온라인 문의 폼 영역 */}
+            {/* 오른쪽: 온라인 문의 폼 */}
             <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
               
