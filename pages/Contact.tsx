@@ -7,23 +7,27 @@ const Contact: React.FC = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    // ✅ 발급받으신 Web3Forms Access Key를 적용했습니다.
+    formData.append("access_key", "023dd5d4-3f66-40a5-b578-c4cf6da195e8");
+
     try {
-      const response = await fetch("https://getform.io/f/mxb76kt5go6", {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        body: formData
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (data.success) {
+        // ✅ 성공 시 사장님이 원하시던 팝업창을 띄웁니다.
         alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
         form.reset();
       } else {
-        // 서버에서 거절할 경우 더 상세한 안내
-        alert("죄송합니다. 서버에서 전송을 거절했습니다. 대시보드의 스팸 설정을 확인해주세요.");
+        // 서버 응답이 에러일 경우
+        alert("죄송합니다. 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
     } catch (error) {
+      // 네트워크 연결 자체의 문제일 경우
       alert("네트워크 오류가 발생했습니다. 연결 상태를 확인해주세요.");
     }
   };
@@ -80,13 +84,12 @@ const Contact: React.FC = () => {
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
               
               <form id="contactForm" onSubmit={handleSubmit}>
-                {/* 봇을 낚기 위한 숨겨진 함정 필드 (Honeypot) */}
+                {/* [중요] 봇 방지용 함정 필드 - Web3Forms 권장 */}
                 <input 
-                  type="text" 
-                  name="subject_hidden" 
+                  type="checkbox" 
+                  name="botcheck" 
+                  className="hidden" 
                   style={{ display: 'none' }} 
-                  tabIndex={-1} 
-                  autoComplete="off" 
                 />
 
                 <div className="space-y-4">
