@@ -2,36 +2,16 @@ import React from 'react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
+  // 폼이 실제로 제출될 때 실행되는 함수
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // 팝업 알림
+    alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
     
-    // 데이터를 객체로 변환하여 전송합니다.
-    const formData = new FormData(form);
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
-
-    try {
-      const response = await fetch("https://getform.io/f/yuqmtegektv", {
-        method: "POST",
-        body: json, // JSON 형태로 전송
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      });
-
-      if (response.ok) {
-        // 성공 팝업
-        alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
-        // 확인 버튼을 누르면 입력 데이터가 즉시 초기화됩니다.
-        form.reset(); 
-      } else {
-        alert("죄송합니다. 서버 설정 문제로 전송에 실패했습니다. 관리자에게 문의바랍니다.");
-      }
-    } catch (error) {
-      alert("서버와 통신 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-    }
+    // 팝업 확인을 누른 후, 0.1초 뒤에 폼을 비웁니다.
+    const form = e.currentTarget;
+    setTimeout(() => {
+      form.reset();
+    }, 100);
   };
 
   return (
@@ -47,7 +27,7 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
-            {/* 정보 영역 */}
+            {/* 연락처 정보 */}
             <div>
               <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Us</h2>
               <div className="space-y-8">
@@ -81,10 +61,19 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* 온라인 문의 폼 */}
+            {/* 온라인 문의 폼 (target="hidden_iframe"으로 페이지 이동 방지) */}
             <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
-              <form onSubmit={handleSubmit}>
+              
+              {/* 전송 후 페이지 이동을 막기 위한 숨겨진 프레임 */}
+              <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }}></iframe>
+              
+              <form 
+                action="https://getform.io/f/yuqmtegektv" 
+                method="POST" 
+                target="hidden_iframe" 
+                onSubmit={handleSubmit}
+              >
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">회사명 / 성함</label>
