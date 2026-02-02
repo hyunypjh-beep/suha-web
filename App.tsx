@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Business from './pages/Business';
+import project from './pages/project';
 import Culture from './pages/Culture';
 import Contact from './pages/Contact';
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/business" element={<Business />} />
+            <Route path="/project" element={<project />} />
             <Route path="/culture" element={<Culture />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
