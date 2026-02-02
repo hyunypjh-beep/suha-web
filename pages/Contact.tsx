@@ -70,7 +70,7 @@ const Contact: React.FC = () => {
               
               <form 
                 id="contactForm"
-                action="https://getform.io/f/yuqmtegektv" 
+                action="https://getform.io/f/mxb76kt5go6" 
                 method="POST" 
                 target="v_iframe" 
                 onSubmit={handleSubmit}
