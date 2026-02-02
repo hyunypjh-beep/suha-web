@@ -3,7 +3,22 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Users, Briefcase, TrendingUp } from 'lucide-react';
 
 const clients = [
-  "Samsung Electronics", "SEMES", "Canon Korea", "Hanyang ENG", "SFA", "Wonik IPS"
+  "Samsung Electronics",
+  "SEMES",
+  "SEMIS",
+  "Canon Korea",
+  "Hanyang ENG",
+  "SFA",
+  "Wonik IPS",
+  "CJ E&C",
+  "Chemtronics",
+  "Shinbo",
+  "Mirae-Ga",
+  "HK Space",
+  "Chaewoo",
+  "YJ ENG",
+  "CF Technology",
+  "Somyung Tech"
 ];
 
 const Home: React.FC = () => {
@@ -147,15 +162,15 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Clients */}
+      {/* Clients (TRUSTED PARTNERS) */}
       <section className="py-16 bg-white border-t border-slate-100">
         <div className="container mx-auto px-6">
-          <p className="text-center text-slate-400 font-bold mb-8 tracking-widest text-sm">TRUSTED PARTNERS</p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+          <p className="text-center text-slate-400 font-bold mb-10 tracking-widest text-xl">TRUSTED PARTNERS</p>
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 items-center select-none">
             {clients.map((client, idx) => (
-              <div key={idx} className="text-2xl font-bold text-slate-300 font-sans">
+              <h3 key={idx} className="text-2xl md:text-3xl font-black text-slate-200 uppercase tracking-tight hover:text-slate-300 transition-colors cursor-default">
                 {client}
-              </div>
+              </h3>
             ))}
           </div>
         </div>
