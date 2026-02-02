@@ -1,11 +1,11 @@
 import React from 'react';
-import { Phone, MapPin, Clock, Mail } from 'lucide-react';
+import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
     <div className="pt-20">
       {/* Header */}
-       <div className="bg-slate-900 text-white py-20">
+      <div className="bg-slate-900 text-white py-20">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">고객지원</h1>
           <p className="text-slate-300 text-lg">
@@ -57,51 +57,82 @@ const Contact: React.FC = () => {
                 </div>
               </div>
 
-               {/* Map Placeholder */}
-               <div className="mt-10 w-full h-64 bg-slate-200 rounded-lg overflow-hidden relative">
-                  <img 
-                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
-                    alt="Map Background" 
-                    className="w-full h-full object-cover opacity-50"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-white p-4 rounded shadow-lg text-center">
-                      <p className="font-bold text-slate-900">Suha E&S 본사</p>
-                      <a 
-                        href="https://map.kakao.com/?q=충남 아산시 탕정면 삼성로 242-10" 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="text-xs text-blue-600 hover:underline"
-                      >
-                        지도 보기
-                      </a>
-                    </div>
+              {/* Map Placeholder */}
+              <div className="mt-10 w-full h-64 bg-slate-200 rounded-lg overflow-hidden relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                  alt="Map Background" 
+                  className="w-full h-full object-cover opacity-50"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-white p-4 rounded shadow-lg text-center">
+                    <p className="font-bold text-slate-900">Suha E&S 본사</p>
+                    <a 
+                      href="https://map.kakao.com/?q=충남 아산시 탕정면 삼성로 242-10" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="text-xs text-blue-600 hover:underline"
+                    >
+                      지도 보기
+                    </a>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
 
             {/* Form */}
             <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
-              <form onSubmit={(e) => e.preventDefault()}>
+              
+              {/* Formspree 연결 설정 적용 */}
+              <form action="https://formspree.io/f/xaqbjajg" method="POST">
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">회사명 / 성함</label>
-                    <input type="text" className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" placeholder="입력해주세요" />
+                    <input 
+                      name="성함/회사명" 
+                      type="text" 
+                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
+                      placeholder="입력해주세요" 
+                      required 
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">연락처</label>
-                    <input type="tel" className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" placeholder="010-0000-0000" />
+                    <input 
+                      name="연락처" 
+                      type="tel" 
+                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
+                      placeholder="010-0000-0000" 
+                      required 
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">이메일</label>
-                    <input type="email" className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" placeholder="example@company.com" />
+                    <input 
+                      name="이메일" 
+                      type="email" 
+                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
+                      placeholder="example@company.com" 
+                      required 
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">문의내용</label>
-                    <textarea rows={4} className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" placeholder="문의하실 내용을 입력해주세요"></textarea>
+                    <textarea 
+                      name="문의내용" 
+                      rows={4} 
+                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
+                      placeholder="문의하실 내용을 입력해주세요" 
+                      required
+                    ></textarea>
                   </div>
-                  <button className="w-full bg-blue-900 text-white font-bold py-4 rounded hover:bg-blue-800 transition">
+                  
+                  {/* 버튼 타입을 submit으로 명시 */}
+                  <button 
+                    type="submit" 
+                    className="w-full bg-blue-900 text-white font-bold py-4 rounded hover:bg-blue-800 transition"
+                  >
                     문의하기
                   </button>
                 </div>
