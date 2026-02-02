@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Phone, MapPin, Mail, X } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [isAgreed, setIsAgreed] = useState(false); // 체크박스 상태 관리
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false); // 팝업창 상태 관리
+  const [isAgreed, setIsAgreed] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // 동의 체크 여부 다시 확인
     if (!isAgreed) {
       alert("개인정보 수집 및 이용에 동의해주세요.");
       return;
@@ -16,8 +14,6 @@ const Contact: React.FC = () => {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-
-    // ✅ 발급받으신 Web3Forms Access Key 적용
     formData.append("access_key", "023dd5d4-3f66-40a5-b578-c4cf6da195e8");
 
     try {
@@ -25,48 +21,43 @@ const Contact: React.FC = () => {
         method: "POST",
         body: formData
       });
-
       const data = await response.json();
-
       if (data.success) {
-        alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
+        alert("감사합니다. 문의가 성공적으로 접수되었습니다!");
         form.reset();
-        setIsAgreed(false); // 폼 초기화 시 체크박스도 해제
+        setIsAgreed(false);
       } else {
-        alert("죄송합니다. 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        alert("전송 실패: " + data.message);
       }
     } catch (error) {
-      alert("네트워크 오류가 발생했습니다. 연결 상태를 확인해주세요.");
+      alert("네트워크 오류가 발생했습니다.");
     }
   };
 
   return (
-    <div className="pt-20 relative">
-      {/* --- 개인정보 수집 동의 상세 팝업 (모달) --- */}
+    <div className="pt-20 relative font-sans text-slate-900">
+      {/* --- 개인정보 수집 동의 팝업 (모달) --- */}
       {showPrivacyModal && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="bg-white rounded-lg w-full max-w-md shadow-2xl relative animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl w-full max-w-md shadow-2xl relative overflow-hidden animate-in fade-in zoom-in duration-200">
             <button 
               onClick={() => setShowPrivacyModal(false)} 
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full text-slate-500 hover:bg-slate-200 transition-colors"
             >
-              <X size={24} />
+              <X size={20} />
             </button>
             <div className="p-8">
-              <h3 className="text-xl font-bold mb-6 text-slate-900 border-b pb-4">개인정보 수집 및 이용 안내</h3>
-              <div className="space-y-4 text-sm text-slate-600 overflow-y-auto max-h-[350px] pr-2 text-left leading-relaxed">
-                <p><strong>1. 목적 :</strong> 상담 및 서비스 제공을 위한 연락처 정보 확인</p>
-                <p><strong>2. 필수 항목 :</strong> 회사명/성함, 연락처, 이메일</p>
-                <p><strong>3. 수집 항목 :</strong> 상담 내용 및 접속 로그 데이터 등</p>
-                <p><strong>4. 보유 및 이용기간 :</strong> 검토 완료 후 서비스 종료 시까지 보관하며, 이후 지체 없이 파기합니다.</p>
-                <p className="pt-4 text-xs text-slate-500 border-t">※ 위 정보 수집에 대한 동의를 거부할 권리가 있으며, 거부 시에는 문의 접수가 제한될 수 있습니다.</p>
+              <h3 className="text-xl font-bold mb-8 text-center text-slate-800">개인정보 수집 및 이용 안내</h3>
+              <div className="space-y-5 text-[14px] text-slate-600 leading-relaxed text-left">
+                <p><strong>1. 목적 :</strong> 문의 및 상담 서비스 제공을 위한 연락처 정보 확인</p>
+                <p><strong>2. 필수 항목 :</strong> 이름(또는 상호명), 연락처, 이메일</p>
+                <p><strong>3. 선택 항목 :</strong> 문의 내용</p>
+                <p><strong>4. 수집 항목 :</strong> 사용자 쿠키 데이터 (유입 경로, 내부 이동 경로 등)</p>
+                <p><strong>5. 보유기간 :</strong> 상담 완료 시까지 보관하며, 이후 지체 없이 파기합니다.</p>
+                <div className="pt-4 border-t border-slate-100 text-[13px] text-slate-500">
+                  위 정보 수집에 대한 동의를 거부할 권리가 있으며, 거부 시에는 서비스 이용이 제한될 수 있습니다.
+                </div>
               </div>
-              <button 
-                onClick={() => setShowPrivacyModal(false)}
-                className="w-full mt-6 bg-slate-900 text-white py-3 rounded font-bold hover:bg-slate-800 transition"
-              >
-                확인
-              </button>
             </div>
           </div>
         </div>
@@ -81,26 +72,109 @@ const Contact: React.FC = () => {
       </div>
 
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
-            {/* 왼쪽 정보 섹션 */}
+            {/* 왼쪽: Contact Us 정보 */}
             <div>
               <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Us</h2>
               <div className="space-y-8">
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-blue-900" />
+                    <MapPin className="w-6 h-6 text-[#1e3a8a]" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-900 mb-1">본사 주소</h4>
-                    <p className="text-slate-600">충남 아산시 탕정면 삼성로 242-10, 204동 206호 (31457)</p>
+                    <p className="text-slate-600 leading-relaxed">충남 아산시 탕정면 삼성로 242-10, 204동 206호 (31457)</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-blue-900" />
+                    <Phone className="w-6 h-6 text-[#1e3a8a]" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-900 mb-1">전화번호</h4>
-                    <p
+                    <p className="text-slate-600">041-540-7883</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
+                    <Mail className="w-6 h-6 text-[#1e3a8a]" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-1">이메일</h4>
+                    <p className="text-slate-600 font-medium">official@suha-ens.com</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 오른쪽: 온라인 문의 폼 (파란색 테마 적용) */}
+            <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm">
+              <h3 className="text-2xl font-bold text-slate-900 mb-8">온라인 문의</h3>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">회사명 / 성함</label>
+                  <input name="name" type="text" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="입력해주세요" required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">연락처</label>
+                  <input name="phone" type="tel" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="010-0000-0000" required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">이메일</label>
+                  <input name="email" type="email" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="example@company.com" required />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-slate-700 ml-1">문의내용</label>
+                  <textarea name="message" rows={5} className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="문의하실 내용을 입력해주세요" required></textarea>
+                </div>
+                
+                {/* --- 파란색 체크박스 동의 섹션 --- */}
+                <div className="py-2">
+                  <p className="text-[15px] text-slate-800 font-semibold mb-3 flex items-center">
+                    개인정보 수집 및 이용 동의 <span className="text-rose-500 ml-1">*</span>
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <input 
+                      id="privacy-check"
+                      type="checkbox" 
+                      checked={isAgreed}
+                      onChange={(e) => setIsAgreed(e.target.checked)}
+                      className="w-5 h-5 rounded border-slate-300 text-[#1e3a8a] focus:ring-[#1e3a8a] cursor-pointer"
+                    />
+                    <label htmlFor="privacy-check" className="text-[15px] text-slate-700 cursor-pointer select-none">
+                      동의합니다
+                    </label>
+                    <button 
+                      type="button"
+                      onClick={() => setShowPrivacyModal(true)}
+                      className="text-[15px] text-slate-400 underline underline-offset-4 hover:text-blue-900 ml-1"
+                    >
+                      보기
+                    </button>
+                  </div>
+                </div>
+
+                {/* --- 수하이엔에스 블루 버튼 --- */}
+                <button 
+                  type="submit" 
+                  disabled={!isAgreed}
+                  className={`w-full py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
+                    isAgreed 
+                    ? 'bg-[#1e3a8a] text-white hover:bg-[#172e6d] shadow-md transform hover:-translate-y-0.5' 
+                    : 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                  }`}
+                >
+                  문의하기
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Contact;
