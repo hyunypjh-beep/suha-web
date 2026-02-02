@@ -4,10 +4,10 @@ const Project: React.FC = () => {
   return (
     <div className="pt-20">
       {/* Page Header: 네이비 상단 영역 */}
-      <div className="bg-slate-900 text-white py-24 relative overflow-hidden">
+      <div className="bg-slate-900 text-white py-20 relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10 text-center">
           {/* 주요실적으로 타이틀 변경 */}
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             주요 실적
           </h1>
           
