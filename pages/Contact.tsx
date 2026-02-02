@@ -2,6 +2,33 @@ import React from 'react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  // 폼 제출을 처리하는 함수
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 페이지 새로고침 방지
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xaqbjajg", {
+        method: "POST",
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // 성공 시 알림창 띄우기
+        alert("문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
+        form.reset(); // 입력창 비우기
+      } else {
+        alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
+    } catch (error) {
+      alert("전송 중 서버 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <div className="pt-20">
       {/* Header */}
@@ -67,83 +94,3 @@ const Contact: React.FC = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-white p-4 rounded shadow-lg text-center">
                     <p className="font-bold text-slate-900">Suha E&S 본사</p>
-                    <a 
-                      href="https://map.kakao.com/?q=충남 아산시 탕정면 삼성로 242-10" 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="text-xs text-blue-600 hover:underline"
-                    >
-                      지도 보기
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Form */}
-            <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
-              
-              {/* Formspree 연결 설정 적용 */}
-              <form action="https://formspree.io/f/xaqbjajg" method="POST">
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">회사명 / 성함</label>
-                    <input 
-                      name="성함/회사명" 
-                      type="text" 
-                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
-                      placeholder="입력해주세요" 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">연락처</label>
-                    <input 
-                      name="연락처" 
-                      type="tel" 
-                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
-                      placeholder="010-0000-0000" 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">이메일</label>
-                    <input 
-                      name="이메일" 
-                      type="email" 
-                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
-                      placeholder="example@company.com" 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">문의내용</label>
-                    <textarea 
-                      name="문의내용" 
-                      rows={4} 
-                      className="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-blue-900 focus:outline-none" 
-                      placeholder="문의하실 내용을 입력해주세요" 
-                      required
-                    ></textarea>
-                  </div>
-                  
-                  {/* 버튼 타입을 submit으로 명시 */}
-                  <button 
-                    type="submit" 
-                    className="w-full bg-blue-900 text-white font-bold py-4 rounded hover:bg-blue-800 transition"
-                  >
-                    문의하기
-                  </button>
-                </div>
-              </form>
-            </div>
-
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default Contact;
