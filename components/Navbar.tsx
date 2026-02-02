@@ -6,8 +6,8 @@ import { NavItem } from '../types';
 const navItems: NavItem[] = [
   { label: '회사소개', path: '/about' },
   { label: '사업영역', path: '/business' },
+  { label: '주요실적', path: '/project' },
   { label: '인사/복지', path: '/culture' },
-  { label: '고객지원', path: '/contact' },
 ];
 
 const Navbar: React.FC = () => {
