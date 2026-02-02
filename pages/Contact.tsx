@@ -2,15 +2,15 @@ import React from 'react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  // 폼이 실제로 제출될 때 실행되는 함수
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // 팝업 알림
+  // 폼이 제출될 때 실행되는 함수
+  const handleSubmit = () => {
+    // 1. 성공 팝업 띄우기
     alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
     
-    // 팝업 확인을 누른 후, 0.1초 뒤에 폼을 비웁니다.
-    const form = e.currentTarget;
+    // 2. 팝업 확인 클릭 후 0.1초 뒤에 입력 내용 싹 지우기 (초기화)
+    const form = document.getElementById('contactForm') as HTMLFormElement;
     setTimeout(() => {
-      form.reset();
+      if (form) form.reset();
     }, 100);
   };
 
@@ -27,7 +27,7 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
-            {/* 연락처 정보 */}
+            {/* 왼쪽 정보 섹션 */}
             <div>
               <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Us</h2>
               <div className="space-y-8">
@@ -61,17 +61,18 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* 온라인 문의 폼 (target="hidden_iframe"으로 페이지 이동 방지) */}
+            {/* 오른쪽 온라인 문의 폼 영역 */}
             <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
               
-              {/* 전송 후 페이지 이동을 막기 위한 숨겨진 프레임 */}
-              <iframe name="hidden_iframe" id="hidden_iframe" style={{ display: 'none' }}></iframe>
+              {/* [중요] 외부 페이지 이동을 막기 위한 숨겨진 프레임 */}
+              <iframe name="v_iframe" id="v_iframe" style={{ display: 'none' }}></iframe>
               
               <form 
+                id="contactForm"
                 action="https://getform.io/f/yuqmtegektv" 
                 method="POST" 
-                target="hidden_iframe" 
+                target="v_iframe" 
                 onSubmit={handleSubmit}
               >
                 <div className="space-y-4">
