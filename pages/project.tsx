@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Projects: React.FC = () => {
+const Project: React.FC = () => {
   return (
     <div className="pt-20">
       {/* Page Header: 네이비 상단 영역 */}
