@@ -63,7 +63,7 @@ const Contact: React.FC = () => {
         </div>
       )}
 
-      {/* 헤더 섹션 */}
+      {/* 헤더 섹션 (이전 스타일로 복구) */}
       <div className="bg-slate-900 text-white py-20">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">고객지원</h1>
@@ -71,103 +71,130 @@ const Contact: React.FC = () => {
         </div>
       </div>
 
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
-            {/* 왼쪽: Contact Us 정보 */}
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">Contact Us</h2>
-              <div className="space-y-8">
+            {/* 왼쪽: Contact Us 정보 및 지도 */}
+            <div className="flex flex-col h-full">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">Contact Us</h2>
+              <div className="space-y-6 mb-8">
                 <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-[#1e3a8a]" />
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-[#1e3a8a]" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-slate-900 mb-1">본사 주소</h4>
-                    <p className="text-slate-600 leading-relaxed">충남 아산시 탕정면 삼성로 242-10, 204동 206호 (31457)</p>
+                    <h4 className="text-base font-bold text-slate-900 mb-0.5">본사 주소</h4>
+                    <p className="text-slate-600 text-sm leading-relaxed">충남 아산시 탕정면 삼성로 242-10, 204동 206호 (31457)</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                    <Phone className="w-6 h-6 text-[#1e3a8a]" />
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-[#1e3a8a]" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-slate-900 mb-1">전화번호</h4>
-                    <p className="text-slate-600">041-540-7883</p>
+                    <h4 className="text-base font-bold text-slate-900 mb-0.5">전화번호</h4>
+                    <p className="text-slate-600 text-sm">041-540-7883</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-[#1e3a8a]" />
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-[#1e3a8a]" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-slate-900 mb-1">이메일</h4>
-                    <p className="text-slate-600 font-medium">official@suha-ens.com</p>
+                    <h4 className="text-base font-bold text-slate-900 mb-0.5">이메일</h4>
+                    <p className="text-slate-600 text-sm font-medium">official@suha-ens.com</p>
                   </div>
                 </div>
               </div>
+
+              {/* 오시는 길 제목 추가 */}
+              <h3 className="text-xl font-bold text-slate-900 mb-3">오시는 길</h3>
+
+              {/* --- Map (높이 축소) --- */}
+              <div className="w-full h-[300px] bg-slate-200 rounded-2xl overflow-hidden shadow-lg border border-slate-200 relative">
+                 <iframe 
+                   src="https://maps.google.com/maps?q=충남%20아산시%20탕정면%20삼성로%20242-10&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                   width="100%" 
+                   height="100%" 
+                   style={{ border: 0 }} 
+                   allowFullScreen 
+                   loading="lazy" 
+                   referrerPolicy="no-referrer-when-downgrade"
+                   title="Suha E&S Headquarters Map"
+                   className="grayscale-[20%] hover:grayscale-0 transition-all duration-500 absolute inset-0"
+                 ></iframe>
+              </div>
             </div>
 
-            {/* 오른쪽: 온라인 문의 폼 (파란색 테마 적용) */}
-            <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm">
-              <h3 className="text-2xl font-bold text-slate-900 mb-8">온라인 문의</h3>
-              <form onSubmit={handleSubmit} className="space-y-5">
+            {/* 오른쪽: 온라인 문의 폼 (높이 확장 및 Flex 적용) */}
+            <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm h-full flex flex-col">
+              <h3 className="text-xl font-bold text-slate-900 mb-6">온라인 문의</h3>
+              <form onSubmit={handleSubmit} className="flex flex-col flex-grow gap-3">
                 <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">회사명 / 성함</label>
-                  <input name="name" type="text" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="입력해주세요" required />
+                  <label className="text-xs font-semibold text-slate-700 ml-1">회사명 / 성함</label>
+                  <input name="name" type="text" className="w-full p-3 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all text-sm" placeholder="입력해주세요" required />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">연락처</label>
-                  <input name="phone" type="tel" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="010-0000-0000" required />
+                  <label className="text-xs font-semibold text-slate-700 ml-1">연락처</label>
+                  <input name="phone" type="tel" className="w-full p-3 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all text-sm" placeholder="010-0000-0000" required />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">이메일</label>
-                  <input name="email" type="email" className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="example@company.com" required />
+                  <label className="text-xs font-semibold text-slate-700 ml-1">이메일</label>
+                  <input name="email" type="email" className="w-full p-3 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all text-sm" placeholder="example@company.com" required />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-sm font-semibold text-slate-700 ml-1">문의내용</label>
-                  <textarea name="message" rows={5} className="w-full p-4 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all" placeholder="문의하실 내용을 입력해주세요" required></textarea>
+                
+                {/* 문의내용: 남은 공간 채우기 */}
+                <div className="space-y-1 flex flex-col flex-grow min-h-[120px]">
+                  <label className="text-xs font-semibold text-slate-700 ml-1">문의내용</label>
+                  <textarea 
+                    name="message" 
+                    className="w-full p-3 bg-white border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-900/10 focus:border-[#1e3a8a] transition-all text-sm flex-grow resize-none" 
+                    placeholder="문의하실 내용을 입력해주세요" 
+                    required
+                  ></textarea>
                 </div>
                 
                 {/* --- 파란색 체크박스 동의 섹션 --- */}
-                <div className="py-2">
-                  <p className="text-[15px] text-slate-800 font-semibold mb-3 flex items-center">
-                    개인정보 수집 및 이용 동의 <span className="text-rose-500 ml-1">*</span>
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <input 
-                      id="privacy-check"
-                      type="checkbox" 
-                      checked={isAgreed}
-                      onChange={(e) => setIsAgreed(e.target.checked)}
-                      className="w-5 h-5 rounded border-slate-300 text-[#1e3a8a] focus:ring-[#1e3a8a] cursor-pointer"
-                    />
-                    <label htmlFor="privacy-check" className="text-[15px] text-slate-700 cursor-pointer select-none">
-                      동의합니다
-                    </label>
-                    <button 
-                      type="button"
-                      onClick={() => setShowPrivacyModal(true)}
-                      className="text-[15px] text-slate-400 underline underline-offset-4 hover:text-blue-900 ml-1"
-                    >
-                      보기
-                    </button>
+                <div className="pt-2 mt-auto">
+                  <div className="py-1">
+                    <p className="text-[13px] text-slate-800 font-semibold mb-2 flex items-center">
+                      개인정보 수집 및 이용 동의 <span className="text-rose-500 ml-1">*</span>
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <input 
+                        id="privacy-check"
+                        type="checkbox" 
+                        checked={isAgreed}
+                        onChange={(e) => setIsAgreed(e.target.checked)}
+                        className="w-4 h-4 rounded border-slate-300 text-[#1e3a8a] focus:ring-[#1e3a8a] cursor-pointer"
+                      />
+                      <label htmlFor="privacy-check" className="text-[13px] text-slate-700 cursor-pointer select-none">
+                        동의합니다
+                      </label>
+                      <button 
+                        type="button"
+                        onClick={() => setShowPrivacyModal(true)}
+                        className="text-[13px] text-slate-400 underline underline-offset-4 hover:text-blue-900 ml-1"
+                      >
+                        보기
+                      </button>
+                    </div>
                   </div>
-                </div>
 
-                {/* --- 수하이엔에스 블루 버튼 --- */}
-                <button 
-                  type="submit" 
-                  disabled={!isAgreed}
-                  className={`w-full py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
-                    isAgreed 
-                    ? 'bg-[#1e3a8a] text-white hover:bg-[#172e6d] shadow-md transform hover:-translate-y-0.5' 
-                    : 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                  }`}
-                >
-                  문의하기
-                </button>
+                  {/* --- 수하이엔에스 블루 버튼 --- */}
+                  <button 
+                    type="submit" 
+                    disabled={!isAgreed}
+                    className={`w-full py-3 mt-3 rounded-lg font-bold text-base transition-all duration-300 ${
+                      isAgreed 
+                      ? 'bg-[#1e3a8a] text-white hover:bg-[#172e6d] shadow-md transform hover:-translate-y-0.5' 
+                      : 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                    }`}
+                  >
+                    문의하기
+                  </button>
+                </div>
               </form>
             </div>
           </div>
