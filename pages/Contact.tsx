@@ -2,16 +2,33 @@ import React from 'react';
 import { Phone, MapPin, Mail } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  // 폼이 제출될 때 실행되는 함수
-  const handleSubmit = () => {
-    // 1. 성공 팝업 띄우기
-    alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
-    
-    // 2. 팝업 확인 클릭 후 0.1초 뒤에 입력 내용 싹 지우기 (초기화)
-    const form = document.getElementById('contactForm') as HTMLFormElement;
-    setTimeout(() => {
-      if (form) form.reset();
-    }, 100);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 기본 전송 방식 차단 (더 정확한 제어를 위해)
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      // 새로운 주소 mxb76kt5go6 로 직접 전송을 시도합니다.
+      const response = await fetch("https://getform.io/f/mxb76kt5go6", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        // ✅ 서버가 데이터를 정상적으로 받았을 때만 팝업과 초기화를 실행합니다.
+        alert("감사합니다. 문의가 성공적으로 접수되었습니다. 확인 후 연락드리겠습니다.");
+        form.reset(); 
+      } else {
+        // ❌ 서버 연결은 됐으나 서버가 거절한 경우 (주소 오류 등)
+        alert("죄송합니다. 전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
+    } catch (error) {
+      // 🌐 네트워크 연결 자체가 안 되는 경우
+      alert("네트워크 연결이 불안정합니다. 인터넷 연결을 확인해주세요.");
+    }
   };
 
   return (
@@ -65,16 +82,7 @@ const Contact: React.FC = () => {
             <div className="bg-slate-50 p-8 rounded-xl border border-slate-100">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">온라인 문의</h3>
               
-              {/* [중요] 외부 페이지 이동을 막기 위한 숨겨진 프레임 */}
-              <iframe name="v_iframe" id="v_iframe" style={{ display: 'none' }}></iframe>
-              
-              <form 
-                id="contactForm"
-                action="https://getform.io/f/mxb76kt5go6" 
-                method="POST" 
-                target="v_iframe" 
-                onSubmit={handleSubmit}
-              >
+              <form id="contactForm" onSubmit={handleSubmit}>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">회사명 / 성함</label>
